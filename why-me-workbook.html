@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたの好きと世界の欲しいを結びつけるワークブック 体験版</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAF7F0;
+            --ink: #2C2416;
+            --ink-light: #5C5346;
+            --accent-warm: #D97642;
+            --accent-sage: #7A9B76;
+            --accent-gold: #C9A961;
+            --border: #E5DFD3;
+            --shadow: rgba(44, 36, 22, 0.08);
+            
+            --font-serif: 'Crimson Pro', 'Noto Serif JP', serif;
+            --font-sans: 'DM Sans', 'Noto Sans JP', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--cream);
+            color: var(--ink);
+            font-family: var(--font-serif);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Landing Page */
+        .landing {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(217, 118, 66, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(122, 155, 118, 0.03) 0%, transparent 50%),
+                var(--cream);
+        }
+        
+        .landing-content {
+            max-width: 680px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink-light);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        h1 {
+            font-family: var(--font-sans);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--ink-light);
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+        
+        .time-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--ink-light);
+        }
+        
+        .time-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-warm);
+        }
+        
+        .cta-button {
+            background: var(--ink);
+            color: var(--cream);
+            border: none;
+            padding: 1.25rem 3rem;
+            font-size: 1.1rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px var(--shadow);
+            letter-spacing: 0.02em;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow);
+            background: #3C3426;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            text-align: left;
+        }
+        
+        .feature {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .feature:nth-child(1) { animation-delay: 0.2s; }
+        .feature:nth-child(2) { animation-delay: 0.3s; }
+        .feature:nth-child(3) { animation-delay: 0.4s; }
+        
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            color: var(--accent-warm);
+            margin-bottom: 0.75rem;
+        }
+        
+        .feature h3 {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--ink);
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            color: var(--ink-light);
+            line-height: 1.6;
+        }
+        
+        /* Main App Container */
+        .app {
+            display: none;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .app.active {
+            display: block;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            height: 8px;
+            margin-bottom: 3rem;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-warm), var(--accent-gold));
+            border-radius: 50px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Day Header */
+        .day-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .day-number {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .day-title {
+            font-family: var(--font-sans);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--ink);
+            letter-spacing: -0.01em;
+        }
+        
+        .day-description {
+            font-size: 1.1rem;
+            color: var(--ink-light);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+            text-align: left;
+        }
+        
+        /* Section */
+        .section {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .section-title {
+            font-family: var(--font-sans);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--accent-warm);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .section-description {
+            color: var(--ink-light);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        /* Input Areas */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-label {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            color: var(--ink);
+            background: var(--cream);
+            transition: all 0.3s ease;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .text-input:focus {
+            outline: none;
+            border-color: var(--accent-warm);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(217, 118, 66, 0.1);
+        }
+        
+        .text-input::placeholder {
+            color: #B5ADA0;
+            font-style: italic;
+        }
+        
+        /* List Inputs */
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .list-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            opacity: 0;
+            animation: slideIn 0.4s ease-out forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .list-number {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-warm);
+            min-width: 24px;
+            padding-top: 1rem;
+        }
+        
+        .list-item input {
+            flex: 1;
+        }
+        
+        .add-button {
+            background: transparent;
+            color: var(--accent-warm);
+            border: 2px dashed var(--accent-warm);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        
+        .add-button:hover {
+            background: rgba(217, 118, 66, 0.05);
+            border-color: var(--accent-warm);
+        }
+        
+        /* Keywords */
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .keyword-tag {
+            background: white;
+            border: 2px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--ink);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: popIn 0.3s ease-out;
+        }
+        
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .keyword-tag:hover {
+            border-color: var(--accent-warm);
+            background: rgba(217, 118, 66, 0.05);
+        }
+        
+        .keyword-tag.selected {
+            background: var(--accent-warm);
+            border-color: var(--accent-warm);
+            color: white;
+        }
+        
+        /* Groups */
+        .groups-container {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .group {
+            background: var(--cream);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .group:hover {
+            border-color: var(--accent-sage);
+        }
+        
+        .group-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .group-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        
+        .group-name-input {
+            flex: 1;
+            border: none;
+            background: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--ink);
+        }
+        
+        .group-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .group-item {
+            background: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--ink-light);
+            border: 1px solid var(--border);
+        }
+        
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--ink);
+            border: 2px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--ink-light);
+            background: var(--cream);
+        }
+        
+        .btn-primary {
+            background: var(--ink);
+            color: var(--cream);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--shadow);
+            background: #3C3426;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* Completion Screen */
+        .completion {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        
+        .completion-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            color: var(--accent-gold);
+            opacity: 0;
+            animation: scaleIn 0.6s ease-out 0.2s forwards;
+        }
+        
+        @keyframes scaleIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .your-question {
+            background: linear-gradient(135deg, 
+                rgba(217, 118, 66, 0.05) 0%, 
+                rgba(122, 155, 118, 0.05) 100%);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+        
+        .question-label {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .question-text {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-sans);
+        }
+        
+        .question-confidence {
+            font-size: 1rem;
+            color: var(--ink-light);
+            font-style: italic;
+        }
+        
+        .completion-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 2rem auto 0;
+        }
+        
+        /* Hide/Show utilities */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .landing {
+                padding: 1.5rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Auto-save indicator */
+        .autosave-indicator {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--ink-light);
+            box-shadow: 0 4px 12px var(--shadow);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .autosave-indicator.show {
+            opacity: 1;
+        }
+        
+        .autosave-indicator .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-sage);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing" class="landing">
+        <div class="landing-content">
+            <div class="logo">Why Me? Workbook</div>
+            <h1>あなたの好きと<br>世界の欲しいを<br>結びつけるワークブック<br><span style="font-size: 0.6em; font-weight: 500; color: var(--ink-light);">体験版</span></h1>
+            <p class="subtitle">ぼんやりアイデアを、自分だけの事業に変える</p>
+            
+            <div class="time-info">
+                <svg class="time-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                60〜90分で完了（途中保存可能）
+            </div>
+            
+            <button class="cta-button" onclick="startWorkbook()">
+                さあ、始めましょう
+            </button>
+            
+            <div class="features">
+                <div class="feature">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    <h3>自分の源泉を発見</h3>
+                    <p>人生の痕跡から、あなただけの「問い」を見つけます</p>
+                </div>
+                <div class="feature">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <h3>途中保存OK</h3>
+                    <p>休憩しても大丈夫。データは自動的に保存されます</p>
+                </div>
+                <div class="feature">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <h3>3日分を凝縮</h3>
+                    <p>本編の核心部分を体験できます</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app">
+        <div class="container">
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+
+            <!-- Day 1 -->
+            <div id="day1" class="day hidden">
+                <div class="day-header">
+                    <div class="day-number">Day 1 of 3</div>
+                    <h2 class="day-title">人生の痕跡を集める</h2>
+                    <p class="day-description">
+                        まず、あなた自身を見つめます。ビジネスアイデアを考えるのではありません。あなたの中にある「源泉」を探ります。
+                    </p>
+                </div>
+
+                <!-- Work 1: 違和感 -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">1</span>
+                        違和感を書き出す
+                    </h3>
+                    <p class="section-description">
+                        あなたの人生で感じてきた「違和感」を書き出してください。「なんかおかしいな」と感じたこと、周りは気にしていないのに自分だけ気になったことなど、思いつくままに。
+                    </p>
+                    <div class="list-container" id="iwakanList"></div>
+                    <button class="add-button" onclick="addIwakan()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        違和感を追加
+                    </button>
+                </div>
+
+                <!-- Work 2: 喜び -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">2</span>
+                        喜びの源泉を書き出す
+                    </h3>
+                    <p class="section-description">
+                        あなたが「喜び」を感じた瞬間を思い出してください。時間を忘れて没頭したこと、「これ、楽しい！」と心が動いたことなど。
+                    </p>
+                    <div class="list-container" id="yorokobiList"></div>
+                    <button class="add-button" onclick="addYorokobi()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        喜びを追加
+                    </button>
+                </div>
+
+                <!-- Work 3: 怒り -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">3</span>
+                        怒りの源泉を書き出す
+                    </h3>
+                    <p class="section-description">
+                        あなたが「怒り」や「悲しみ」を感じたことを思い出してください。「これは許せない」と思ったこと、理不尽だと感じたこと、「変えたい」と思った現実など。
+                    </p>
+                    <div class="list-container" id="ikariList"></div>
+                    <button class="add-button" onclick="addIkari()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        怒りを追加
+                    </button>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showLanding()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        最初に戻る
+                    </button>
+                    <button class="btn btn-primary" onclick="goToDay2()" id="day1Next">
+                        Day 2へ進む
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div id="day2" class="day hidden">
+                <div class="day-header">
+                    <div class="day-number">Day 2 of 3</div>
+                    <h2 class="day-title">パターンを見つける</h2>
+                    <p class="day-description">
+                        昨日集めた痕跡の中から「パターン」を見つけていきます。バラバラに見える経験の中に、実は一貫したテーマが隠れています。
+                    </p>
+                </div>
+
+                <!-- Work 1: Keywords -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">1</span>
+                        キーワードを抽出する
+                    </h3>
+                    <p class="section-description">
+                        Day 1で書いた内容から、繰り返し出てくる「キーワード」を抽出してください。何度も出てくる言葉、あなたが大切にしている価値観を表す言葉など。
+                    </p>
+                    <div class="input-group">
+                        <input type="text" 
+                               class="text-input" 
+                               id="keywordInput" 
+                               placeholder="キーワードを入力してEnter（例：自由、本音、つながり、表現...）"
+                               style="min-height: 50px;"
+                               onkeypress="handleKeywordEnter(event)">
+                    </div>
+                    <div class="keywords-container" id="keywordsContainer"></div>
+                </div>
+
+                <!-- Work 2: Clustering -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">2</span>
+                        グループに分ける
+                    </h3>
+                    <p class="section-description">
+                        Day 1で書いた違和感・喜び・怒りを、3〜5個のグループに分けてみます。「これとこれは同じテーマだな」と感じるもの同士をまとめてください。
+                    </p>
+                    <div class="groups-container" id="groupsContainer"></div>
+                    <button class="add-button" onclick="addGroup()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        グループを追加
+                    </button>
+                </div>
+
+                <!-- Work 3: Deep Pattern -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">3</span>
+                        深層パターンを発見する
+                    </h3>
+                    <p class="section-description">
+                        グループを眺めながら、以下の問いに答えてください。
+                    </p>
+                    <div class="input-group">
+                        <label class="input-label">繰り返し出てくるテーマは？</label>
+                        <textarea class="text-input" id="theme" placeholder="複数のグループに共通するテーマがあれば..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">あなたが大切にしている価値観は？</label>
+                        <textarea class="text-input" id="values" placeholder="これらの経験から見える価値観..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">あなたが「許せない」ものは？</label>
+                        <textarea class="text-input" id="unacceptable" placeholder="違和感や怒りの奥にある「これだけは譲れない」..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">あなたが「こうあってほしい」世界は？</label>
+                        <textarea class="text-input" id="idealWorld" placeholder="もし違和感が解消されたら..."></textarea>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="goToDay1()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Day 1へ戻る
+                    </button>
+                    <button class="btn btn-primary" onclick="goToDay3()">
+                        Day 3へ進む
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div id="day3" class="day hidden">
+                <div class="day-header">
+                    <div class="day-number">Day 3 of 3</div>
+                    <h2 class="day-title">問いの原型を作る</h2>
+                    <p class="day-description">
+                        痕跡を集め、パターンを見つけました。今日は、その奥にある「あなたの問い」を言葉にします。
+                    </p>
+                </div>
+
+                <!-- Work 1: Why Digging -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">1</span>
+                        「なぜ」で掘り下げる
+                    </h3>
+                    <p class="section-description">
+                        Day 2で見つけたパターンやテーマを、「なぜ？」で3〜5回掘り下げていきます。
+                    </p>
+                    <div class="input-group">
+                        <label class="input-label">Day 2で見つけた最も重要なテーマ</label>
+                        <textarea class="text-input" id="mainTheme" placeholder="例：人が本音を言えない場面が気になる"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">なぜ1：なぜ私はそれが気になるのか？</label>
+                        <textarea class="text-input" id="why1" placeholder=""></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">なぜ2：</label>
+                        <textarea class="text-input" id="why2" placeholder=""></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">なぜ3：</label>
+                        <textarea class="text-input" id="why3" placeholder=""></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">なぜ4：（必要に応じて）</label>
+                        <textarea class="text-input" id="why4" placeholder=""></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">なぜ5：（必要に応じて）</label>
+                        <textarea class="text-input" id="why5" placeholder=""></textarea>
+                    </div>
+                </div>
+
+                <!-- Work 2: Draft Questions -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">2</span>
+                        問いの1st draftを作る
+                    </h3>
+                    <p class="section-description">
+                        「なぜ」で掘り下げた内容をもとに、あなたの問いを3〜5個、書いてみてください。完璧な文章でなくていいです。
+                    </p>
+                    <div class="list-container" id="questionsList"></div>
+                    <button class="add-button" onclick="addQuestion()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        問いを追加
+                    </button>
+                </div>
+
+                <!-- Work 3: Select Final Question -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="section-number">3</span>
+                        暫定版「自分の問い」を選ぶ
+                    </h3>
+                    <p class="section-description">
+                        上で書いた問いの中から、今の時点で最もしっくりくるものを1つ選んでください。
+                    </p>
+                    <div class="input-group">
+                        <label class="input-label">あなたの問い（暫定版）</label>
+                        <textarea class="text-input" id="finalQuestion" placeholder="考えるだけでエネルギーが湧いてくる問いを..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">この問いを考えるとき、どんな感覚がありますか？</label>
+                        <textarea class="text-input" id="questionFeeling" placeholder=""></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">なぜこの問いを選びましたか？</label>
+                        <textarea class="text-input" id="whyThisQuestion" placeholder=""></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">確信度（1〜10）</label>
+                        <p style="color: var(--ink-light); font-size: 0.9rem; margin-bottom: 1rem;">
+                            この問いに対して、どの程度確信が持てましたか？スライダーを動かして10段階で評価してください。
+                        </p>
+                        <input type="range" min="1" max="10" value="5" id="confidence" 
+                               style="width: 100%; height: 40px; cursor: pointer;"
+                               oninput="document.getElementById('confidenceValue').textContent = this.value">
+                        <div style="text-align: center; margin-top: 0.5rem; font-family: var(--font-sans); font-size: 1.5rem; font-weight: 700; color: var(--accent-warm);">
+                            <span id="confidenceValue">5</span> / 10
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="goToDay2()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Day 2へ戻る
+                    </button>
+                    <button class="btn btn-primary" onclick="completeWorkbook()">
+                        完了する
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Completion -->
+            <div id="completion" class="day hidden">
+                <div class="completion">
+                    <svg class="completion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    
+                    <h2 class="day-title">お疲れさまでした</h2>
+                    <p class="day-description" id="completionMessage">
+                        3日間の旅を通じて、あなたは「自分の問い」を発見しました。<br>
+                        この問いが、あなたの事業の原点になります。
+                    </p>
+
+                    <div class="your-question">
+                        <div class="question-label">あなたの問い</div>
+                        <div class="question-text" id="displayQuestion"></div>
+                        <div class="question-confidence">確信度：<span id="displayConfidence"></span> / 10</div>
+                    </div>
+
+                    <div class="completion-actions">
+                        <button class="btn btn-primary" onclick="downloadResults()" style="width: 100%;">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                            </svg>
+                            PDFで保存する
+                        </button>
+                        <p style="font-size: 0.85rem; color: var(--ink-light); text-align: center; margin-top: 0.5rem; font-style: italic;">
+                            印刷ダイアログが開きます。「送信先」で「PDFに保存」を選択してください
+                        </p>
+                        <button class="btn btn-secondary" onclick="resetWorkbook()" style="width: 100%;">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            最初に戻る
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 3rem; padding: 2rem; background: rgba(217, 118, 66, 0.05); border-radius: 12px; border: 1px solid var(--border);">
+                        <h3 style="font-family: var(--font-sans); font-size: 1.1rem; margin-bottom: 1rem; color: var(--ink);">次のステップ</h3>
+                        <p style="color: var(--ink-light); line-height: 1.8; text-align: left;">
+                            この体験版では、Phase 1（自分の源泉を探る）を完了しました。<br>
+                            本編のワークブックでは、この問いを外の世界へ投影し（Phase 2-3）、「なぜ私がやるのか」を徹底的に問い直し（Phase 4）、独自の解決策を創造します（Phase 5）。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auto-save Indicator -->
+    <div class="autosave-indicator" id="autosaveIndicator">
+        <div class="pulse"></div>
+        自動保存しました
+    </div>
+
+    <script>
+        // State Management
+        let state = {
+            currentDay: 0,
+            iwakan: [],
+            yorokobi: [],
+            ikari: [],
+            keywords: [],
+            groups: [],
+            theme: '',
+            values: '',
+            unacceptable: '',
+            idealWorld: '',
+            mainTheme: '',
+            whys: ['', '', '', '', ''],
+            questions: [],
+            finalQuestion: '',
+            questionFeeling: '',
+            whyThisQuestion: '',
+            confidence: 5
+        };
+
+        // Storage utilities
+        function saveState() {
+            try {
+                localStorage.setItem('workbook-state', JSON.stringify(state));
+                showAutosaveIndicator();
+            } catch (error) {
+                console.error('Save error:', error);
+            }
+        }
+
+        function loadState() {
+            try {
+                const saved = localStorage.getItem('workbook-state');
+                if (saved) {
+                    state = JSON.parse(saved);
+                    return true;
+                }
+            } catch (error) {
+                console.error('Load error:', error);
+            }
+            return false;
+        }
+
+        function showAutosaveIndicator() {
+            const indicator = document.getElementById('autosaveIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+        // Initialize
+        function init() {
+            const hasState = loadState();
+            
+            // Don't restore if on completion screen - always start fresh
+            if (hasState && state.currentDay > 0 && state.currentDay < 4) {
+                // Resume from saved state (Day 1-3 only)
+                document.getElementById('landing').classList.remove('landing');
+                document.getElementById('landing').style.display = 'none';
+                document.getElementById('app').classList.add('active');
+                goToDay(state.currentDay);
+            } else {
+                // Initialize with first items or restart from landing
+                state.iwakan = state.iwakan || [''];
+                state.yorokobi = state.yorokobi || [''];
+                state.ikari = state.ikari || [''];
+                state.groups = state.groups || [{ name: '', items: [], color: '#D97642' }];
+                state.questions = state.questions || [''];
+                state.currentDay = 0; // Reset to landing
+            }
+        }
+
+        // Landing
+        function startWorkbook() {
+            document.getElementById('landing').style.display = 'none';
+            document.getElementById('app').classList.add('active');
+            goToDay(1);
+        }
+
+        function showLanding() {
+            if (confirm('最初に戻りますか？（データは保存されています）')) {
+                document.getElementById('app').classList.remove('active');
+                document.getElementById('landing').style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById('landing').classList.add('landing');
+                }, 10);
+            }
+        }
+
+        // Navigation
+        function goToDay(day) {
+            // Hide all days
+            document.querySelectorAll('.day').forEach(d => d.classList.add('hidden'));
+            
+            // Show target day
+            state.currentDay = day;
+            const dayElement = document.getElementById(`day${day}`);
+            if (dayElement) {
+                dayElement.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            } else if (day === 4) {
+                document.getElementById('completion').classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
+            
+            // Update progress
+            updateProgress();
+            
+            // Render content
+            if (day === 1) renderDay1();
+            if (day === 2) renderDay2();
+            if (day === 3) renderDay3();
+            
+            saveState();
+        }
+
+        function updateProgress() {
+            const progress = (state.currentDay / 4) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function goToDay1() { goToDay(1); }
+        function goToDay2() { goToDay(2); }
+        function goToDay3() { goToDay(3); }
+
+        // Day 1: List Management
+        function renderDay1() {
+            renderList('iwakanList', state.iwakan, 'iwakan');
+            renderList('yorokobiList', state.yorokobi, 'yorokobi');
+            renderList('ikariList', state.ikari, 'ikari');
+        }
+
+        function renderList(containerId, items, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.innerHTML = `
+                    <div class="list-number">${index + 1}</div>
+                    <input type="text" 
+                           class="text-input" 
+                           value="${item}" 
+                           placeholder="ここに書いてください..."
+                           oninput="updateListItem('${type}', ${index}, this.value)"
+                           style="min-height: 60px;">
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateListItem(type, index, value) {
+            state[type][index] = value;
+            saveState();
+        }
+
+        function addIwakan() {
+            state.iwakan.push('');
+            renderDay1();
+            saveState();
+        }
+
+        function addYorokobi() {
+            state.yorokobi.push('');
+            renderDay1();
+            saveState();
+        }
+
+        function addIkari() {
+            state.ikari.push('');
+            renderDay1();
+            saveState();
+        }
+
+        // Day 2: Keywords and Clustering
+        function renderDay2() {
+            // Render keywords
+            const container = document.getElementById('keywordsContainer');
+            container.innerHTML = '';
+            state.keywords.forEach((keyword, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'keyword-tag';
+                tag.textContent = keyword;
+                tag.onclick = () => removeKeyword(index);
+                container.appendChild(tag);
+            });
+
+            // Render groups
+            renderGroups();
+
+            // Load text inputs
+            document.getElementById('theme').value = state.theme;
+            document.getElementById('values').value = state.values;
+            document.getElementById('unacceptable').value = state.unacceptable;
+            document.getElementById('idealWorld').value = state.idealWorld;
+
+            // Add listeners
+            ['theme', 'values', 'unacceptable', 'idealWorld'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.dataset.listenerAdded) {
+                    el.addEventListener('input', (e) => {
+                        state[id] = e.target.value;
+                        saveState();
+                    });
+                    el.dataset.listenerAdded = 'true';
+                }
+            });
+        }
+
+        function handleKeywordEnter(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const input = document.getElementById('keywordInput');
+                const value = input.value.trim();
+                if (value && !state.keywords.includes(value)) {
+                    state.keywords.push(value);
+                    input.value = '';
+                    renderDay2();
+                    saveState();
+                }
+            }
+        }
+
+        function removeKeyword(index) {
+            state.keywords.splice(index, 1);
+            renderDay2();
+            saveState();
+        }
+
+        function renderGroups() {
+            const container = document.getElementById('groupsContainer');
+            container.innerHTML = '';
+            
+            const colors = ['#D97642', '#7A9B76', '#C9A961', '#8B7A99', '#6B8E9B'];
+            
+            state.groups.forEach((group, index) => {
+                const div = document.createElement('div');
+                div.className = 'group';
+                
+                const allItems = [
+                    ...state.iwakan.filter(i => i.trim()),
+                    ...state.yorokobi.filter(i => i.trim()),
+                    ...state.ikari.filter(i => i.trim())
+                ];
+                
+                div.innerHTML = `
+                    <div class="group-header">
+                        <div class="group-color" style="background: ${colors[index % colors.length]}"></div>
+                        <input type="text" 
+                               class="group-name-input" 
+                               value="${group.name}" 
+                               placeholder="グループ名..."
+                               oninput="updateGroupName(${index}, this.value)">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">このグループに含まれる項目（番号で）</label>
+                        <input type="text" 
+                               class="text-input" 
+                               value="${group.items.join(', ')}" 
+                               placeholder="例：1, 3, 5（Day 1の番号）"
+                               style="min-height: 50px;"
+                               oninput="updateGroupItems(${index}, this.value)">
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateGroupName(index, value) {
+            state.groups[index].name = value;
+            saveState();
+        }
+
+        function updateGroupItems(index, value) {
+            const items = value.split(',').map(i => i.trim()).filter(i => i);
+            state.groups[index].items = items;
+            saveState();
+        }
+
+        function addGroup() {
+            if (state.groups.length < 5) {
+                state.groups.push({ name: '', items: [], color: '#8B7A99' });
+                renderDay2();
+                saveState();
+            }
+        }
+
+        // Day 3: Questions
+        function renderDay3() {
+            // Load whys
+            document.getElementById('mainTheme').value = state.mainTheme;
+            ['why1', 'why2', 'why3', 'why4', 'why5'].forEach((id, index) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.value = state.whys[index];
+                    if (!el.dataset.listenerAdded) {
+                        el.addEventListener('input', (e) => {
+                            state.whys[index] = e.target.value;
+                            saveState();
+                        });
+                        el.dataset.listenerAdded = 'true';
+                    }
+                }
+            });
+
+            // Main theme listener
+            const mainThemeEl = document.getElementById('mainTheme');
+            if (mainThemeEl && !mainThemeEl.dataset.listenerAdded) {
+                mainThemeEl.addEventListener('input', (e) => {
+                    state.mainTheme = e.target.value;
+                    saveState();
+                });
+                mainThemeEl.dataset.listenerAdded = 'true';
+            }
+
+            // Render questions list
+            renderQuestionsList();
+
+            // Load final section
+            document.getElementById('finalQuestion').value = state.finalQuestion;
+            document.getElementById('questionFeeling').value = state.questionFeeling;
+            document.getElementById('whyThisQuestion').value = state.whyThisQuestion;
+            document.getElementById('confidence').value = state.confidence;
+            document.getElementById('confidenceValue').textContent = state.confidence;
+
+            // Add listeners
+            ['finalQuestion', 'questionFeeling', 'whyThisQuestion'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.dataset.listenerAdded) {
+                    el.addEventListener('input', (e) => {
+                        state[id] = e.target.value;
+                        saveState();
+                    });
+                    el.dataset.listenerAdded = 'true';
+                }
+            });
+
+            const confidenceEl = document.getElementById('confidence');
+            if (confidenceEl && !confidenceEl.dataset.listenerAdded) {
+                confidenceEl.addEventListener('input', (e) => {
+                    state.confidence = parseInt(e.target.value);
+                    saveState();
+                });
+                confidenceEl.dataset.listenerAdded = 'true';
+            }
+        }
+
+        function renderQuestionsList() {
+            const container = document.getElementById('questionsList');
+            container.innerHTML = '';
+            state.questions.forEach((question, index) => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.innerHTML = `
+                    <div class="list-number">問い${index + 1}</div>
+                    <input type="text" 
+                           class="text-input" 
+                           value="${question}" 
+                           placeholder="あなたの問いを書いてください..."
+                           oninput="updateQuestion(${index}, this.value)"
+                           style="min-height: 60px;">
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateQuestion(index, value) {
+            state.questions[index] = value;
+            saveState();
+        }
+
+        function addQuestion() {
+            if (state.questions.length < 5) {
+                state.questions.push('');
+                renderDay3();
+                saveState();
+            }
+        }
+
+        // Completion
+        function completeWorkbook() {
+            const question = state.finalQuestion.trim() || 'あなたの問いは、ここから始まります';
+            const isComplete = state.finalQuestion.trim().length > 0;
+
+            document.getElementById('displayQuestion').textContent = question;
+            document.getElementById('displayConfidence').textContent = state.confidence;
+            
+            // Add a visual indicator if incomplete
+            const questionElement = document.getElementById('displayQuestion');
+            const messageElement = document.getElementById('completionMessage');
+            
+            if (!isComplete) {
+                questionElement.style.fontStyle = 'italic';
+                questionElement.style.color = 'var(--ink-light)';
+                messageElement.innerHTML = '体験版を最後まで見ていただき、ありがとうございました。<br>時間をかけて、じっくり自分と向き合うと、あなただけの問いが必ず見つかります。';
+            } else {
+                questionElement.style.fontStyle = 'normal';
+                questionElement.style.color = 'var(--ink)';
+                messageElement.innerHTML = '3日間の旅を通じて、あなたは「自分の問い」を発見しました。<br>この問いが、あなたの事業の原点になります。';
+            }
+            
+            goToDay(4);
+        }
+
+        function downloadResults() {
+            // Trigger browser's native print dialog
+            window.print();
+        }
+
+        function resetWorkbook() {
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Reset state completely
+            state = {
+                currentDay: 0,
+                iwakan: [''],
+                yorokobi: [''],
+                ikari: [''],
+                keywords: [],
+                groups: [{ name: '', items: [], color: '#D97642' }],
+                theme: '',
+                values: '',
+                unacceptable: '',
+                idealWorld: '',
+                mainTheme: '',
+                whys: ['', '', '', '', ''],
+                questions: [''],
+                finalQuestion: '',
+                questionFeeling: '',
+                whyThisQuestion: '',
+                confidence: 5
+            };
+            
+            // Hide app, show landing
+            document.getElementById('app').classList.remove('active');
+            document.getElementById('landing').style.display = 'flex';
+            
+            // Hide all days
+            document.querySelectorAll('.day').forEach(d => d.classList.add('hidden'));
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
