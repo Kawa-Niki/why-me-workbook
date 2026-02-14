@@ -1252,6 +1252,10 @@
 
         // Day 2: Keywords and Clustering
         function renderDay2() {
+            // Clear keyword input field
+            const keywordInput = document.getElementById('keywordInput');
+            if (keywordInput) keywordInput.value = '';
+            
             // Render keywords
             const container = document.getElementById('keywordsContainer');
             container.innerHTML = '';
@@ -1481,13 +1485,489 @@
         }
 
         function downloadResults() {
-            // Trigger browser's native print dialog
-            window.print();
+            // Create a beautiful results page in a new window
+            const resultsWindow = window.open('', '_blank');
+            
+            if (!resultsWindow) {
+                alert('ポップアップがブロックされました。ブラウザの設定でポップアップを許可してください。');
+                return;
+            }
+            
+            // Generate comprehensive results HTML
+            const resultsHTML = generateResultsHTML();
+            
+            resultsWindow.document.write(resultsHTML);
+            resultsWindow.document.close();
+            
+            // Auto-trigger print dialog after a short delay
+            resultsWindow.addEventListener('load', () => {
+                setTimeout(() => {
+                    resultsWindow.print();
+                }, 500);
+            });
+        }
+        
+        function generateResultsHTML() {
+            const now = new Date().toLocaleString('ja-JP');
+            
+            return `<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワークブック結果 - ${now}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAF7F0;
+            --ink: #2C2416;
+            --ink-light: #5C5346;
+            --accent-warm: #D97642;
+            --accent-sage: #7A9B76;
+            --accent-gold: #C9A961;
+            --border: #E5DFD3;
+        }
+        
+        @page {
+            margin: 2.5cm;
+            size: A4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--cream);
+            color: var(--ink);
+            font-family: 'Crimson Pro', 'Noto Serif JP', serif;
+            line-height: 1.7;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+            page-break-after: avoid;
+        }
+        
+        .logo {
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink-light);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        
+        h1 {
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--ink-light);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        
+        .date {
+            font-size: 0.85rem;
+            color: var(--ink-light);
+        }
+        
+        .question-box {
+            background: linear-gradient(135deg, rgba(217, 118, 66, 0.08) 0%, rgba(122, 155, 118, 0.08) 100%);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+        
+        .question-label {
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+        }
+        
+        .question-text.empty {
+            font-style: italic;
+            color: var(--ink-light);
+            font-size: 1.25rem;
+        }
+        
+        .confidence {
+            font-size: 0.95rem;
+            color: var(--ink-light);
+            font-style: italic;
+        }
+        
+        .day-section {
+            margin: 2.5rem 0;
+            page-break-inside: avoid;
+        }
+        
+        h2 {
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin: 2rem 0 1.25rem 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            page-break-after: avoid;
+        }
+        
+        h3 {
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-warm);
+            margin: 1.25rem 0 0.75rem 0;
+            page-break-after: avoid;
+        }
+        
+        .subsection {
+            margin: 1.5rem 0;
+            page-break-inside: avoid;
+        }
+        
+        .item-list {
+            margin: 0.5rem 0 1rem 0;
+        }
+        
+        .item {
+            margin: 0.4rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .item::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-warm);
+            font-weight: bold;
+        }
+        
+        .empty-message {
+            color: var(--ink-light);
+            font-style: italic;
+            padding: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.5rem 0;
+        }
+        
+        .keyword {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.65rem;
+            border-radius: 50px;
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+            font-size: 0.85rem;
+            color: var(--ink);
+        }
+        
+        .group {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        
+        .group-name {
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+        }
+        
+        .group-items {
+            color: var(--ink-light);
+            font-size: 0.85rem;
+        }
+        
+        .pattern-item {
+            margin: 0.9rem 0;
+        }
+        
+        .pattern-label {
+            font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+        
+        .pattern-value {
+            color: var(--ink-light);
+            padding-left: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--ink-light);
+            font-size: 0.85rem;
+            page-break-before: avoid;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .question-box {
+                background: rgba(217, 118, 66, 0.05);
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .keyword {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .group {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Why Me? Workbook</div>
+        <h1>あなたの好きと世界の欲しいを<br>結びつけるワークブック</h1>
+        <div class="subtitle">体験版 結果レポート</div>
+        <div class="date">完了日時：${now}</div>
+    </div>
+    
+    <div class="question-box">
+        <div class="question-label">あなたの問い</div>
+        <div class="question-text ${!state.finalQuestion || !state.finalQuestion.trim() ? 'empty' : ''}">${
+            state.finalQuestion && state.finalQuestion.trim() 
+                ? state.finalQuestion 
+                : 'あなたの問いは、ここから始まります'
+        }</div>
+        <div class="confidence">確信度：${state.confidence || 5} / 10</div>
+    </div>
+    
+    <div class="day-section">
+        <h2>Day 1：人生の痕跡</h2>
+        
+        <div class="subsection">
+            <h3>違和感</h3>
+            ${state.iwakan && state.iwakan.filter(i => i && i.trim()).length > 0 ? `
+                <div class="item-list">
+                    ${state.iwakan.filter(i => i && i.trim()).map(i => 
+                        `<div class="item">${escapeHtml(i)}</div>`
+                    ).join('')}
+                </div>
+            ` : '<div class="empty-message">（未入力）</div>'}
+        </div>
+        
+        <div class="subsection">
+            <h3>喜びの源泉</h3>
+            ${state.yorokobi && state.yorokobi.filter(i => i && i.trim()).length > 0 ? `
+                <div class="item-list">
+                    ${state.yorokobi.filter(i => i && i.trim()).map(i => 
+                        `<div class="item">${escapeHtml(i)}</div>`
+                    ).join('')}
+                </div>
+            ` : '<div class="empty-message">（未入力）</div>'}
+        </div>
+        
+        <div class="subsection">
+            <h3>怒りの源泉</h3>
+            ${state.ikari && state.ikari.filter(i => i && i.trim()).length > 0 ? `
+                <div class="item-list">
+                    ${state.ikari.filter(i => i && i.trim()).map(i => 
+                        `<div class="item">${escapeHtml(i)}</div>`
+                    ).join('')}
+                </div>
+            ` : '<div class="empty-message">（未入力）</div>'}
+        </div>
+    </div>
+    
+    <div class="day-section">
+        <h2>Day 2：パターン</h2>
+        
+        <div class="subsection">
+            <h3>キーワード</h3>
+            ${state.keywords && state.keywords.length > 0 ? `
+                <div class="keywords">
+                    ${state.keywords.map(k => 
+                        `<span class="keyword">${escapeHtml(k)}</span>`
+                    ).join('')}
+                </div>
+            ` : '<div class="empty-message">（未入力）</div>'}
+        </div>
+        
+        <div class="subsection">
+            <h3>グループ</h3>
+            ${state.groups && state.groups.some(g => g.name || (g.items && g.items.length > 0)) ? 
+                state.groups.map(g => `
+                    <div class="group">
+                        <div class="group-name">${escapeHtml(g.name) || '（未命名）'}</div>
+                        <div class="group-items">項目：${
+                            g.items && g.items.length > 0 
+                                ? escapeHtml(g.items.join(', ')) 
+                                : 'なし'
+                        }</div>
+                    </div>
+                `).join('') 
+            : '<div class="empty-message">（未入力）</div>'}
+        </div>
+        
+        <div class="subsection">
+            <h3>深層パターン</h3>
+            ${state.theme || state.values || state.unacceptable || state.idealWorld ? `
+                ${state.theme ? `
+                    <div class="pattern-item">
+                        <div class="pattern-label">繰り返し出てくるテーマ</div>
+                        <div class="pattern-value">${escapeHtml(state.theme)}</div>
+                    </div>
+                ` : ''}
+                ${state.values ? `
+                    <div class="pattern-item">
+                        <div class="pattern-label">大切にしている価値観</div>
+                        <div class="pattern-value">${escapeHtml(state.values)}</div>
+                    </div>
+                ` : ''}
+                ${state.unacceptable ? `
+                    <div class="pattern-item">
+                        <div class="pattern-label">許せないもの</div>
+                        <div class="pattern-value">${escapeHtml(state.unacceptable)}</div>
+                    </div>
+                ` : ''}
+                ${state.idealWorld ? `
+                    <div class="pattern-item">
+                        <div class="pattern-label">こうあってほしい世界</div>
+                        <div class="pattern-value">${escapeHtml(state.idealWorld)}</div>
+                    </div>
+                ` : ''}
+            ` : '<div class="empty-message">（未入力）</div>'}
+        </div>
+    </div>
+    
+    <div class="day-section">
+        <h2>Day 3：問いの創造</h2>
+        
+        <div class="subsection">
+            <h3>なぜの掘り下げ</h3>
+            ${state.mainTheme || (state.whys && state.whys.some(w => w && w.trim())) ? `
+                ${state.mainTheme ? `
+                    <div class="pattern-item">
+                        <div class="pattern-label">最も重要なテーマ</div>
+                        <div class="pattern-value">${escapeHtml(state.mainTheme)}</div>
+                    </div>
+                ` : ''}
+                ${state.whys ? state.whys.map((w, idx) => 
+                    w && w.trim() ? `
+                        <div class="pattern-item">
+                            <div class="pattern-label">なぜ${idx + 1}</div>
+                            <div class="pattern-value">${escapeHtml(w)}</div>
+                        </div>
+                    ` : ''
+                ).join('') : ''}
+            ` : '<div class="empty-message">（未入力）</div>'}
+        </div>
+        
+        <div class="subsection">
+            <h3>候補の問い</h3>
+            ${state.questions && state.questions.filter(q => q && q.trim()).length > 0 ? `
+                <div class="item-list">
+                    ${state.questions.filter(q => q && q.trim()).map(q => 
+                        `<div class="item">${escapeHtml(q)}</div>`
+                    ).join('')}
+                </div>
+            ` : '<div class="empty-message">（未入力）</div>'}
+        </div>
+        
+        <div class="subsection">
+            <h3>選んだ問いについて</h3>
+            ${state.questionFeeling || state.whyThisQuestion ? `
+                ${state.questionFeeling && state.questionFeeling.trim() ? `
+                    <div class="pattern-item">
+                        <div class="pattern-label">この問いを考えるときの感覚</div>
+                        <div class="pattern-value">${escapeHtml(state.questionFeeling)}</div>
+                    </div>
+                ` : ''}
+                ${state.whyThisQuestion && state.whyThisQuestion.trim() ? `
+                    <div class="pattern-item">
+                        <div class="pattern-label">なぜこの問いを選んだか</div>
+                        <div class="pattern-value">${escapeHtml(state.whyThisQuestion)}</div>
+                    </div>
+                ` : ''}
+            ` : '<div class="empty-message">（未入力）</div>'}
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>この体験版では、Phase 1（自分の源泉を探る）を完了しました。</p>
+        <p style="margin-top: 0.5rem;">本編では、この問いを外の世界へ投影し（Phase 2-3）、<br>「なぜ私がやるのか」を徹底的に問い直し（Phase 4）、独自の解決策を創造します（Phase 5）。</p>
+    </div>
+</body>
+</html>`;
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         function resetWorkbook() {
             // Clear localStorage
             localStorage.clear();
+            
+            // Clear all input fields
+            const keywordInput = document.getElementById('keywordInput');
+            if (keywordInput) keywordInput.value = '';
             
             // Reset state completely
             state = {
