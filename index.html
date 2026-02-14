@@ -407,6 +407,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             animation: popIn 0.3s ease-out;
+            position: relative;
         }
         
         @keyframes popIn {
@@ -421,8 +422,20 @@
         }
         
         .keyword-tag:hover {
-            border-color: var(--accent-warm);
-            background: rgba(217, 118, 66, 0.05);
+            border-color: #E74C3C;
+            background: rgba(231, 76, 60, 0.05);
+            transform: scale(1.05);
+        }
+        
+        .keyword-tag:hover::after {
+            content: "×";
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #E74C3C;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
         
         .keyword-tag.selected {
@@ -830,28 +843,27 @@
                         キーワードを抽出する
                     </h3>
                     <p class="section-description">
-                        Day 1で書いた内容から、繰り返し出てくる「キーワード」を抽出してください。何度も出てくる言葉、あなたが大切にしている価値観を表す言葉など。
+                        Day 1で書いた内容から、繰り返し出てくる「キーワード」を抽出し、タグ化しましょう。何度も出てくる言葉、あなたが大切にしている価値観を表す言葉など。
                     </p>
                     <div class="input-group">
                         <input type="text" 
                                class="text-input" 
                                id="keywordInput" 
-                               placeholder="キーワードを入力してEnter（例：自由、本音、つながり、表現...）"
+                               placeholder="キーワードを入力（例：自由、本音、つながり、表現...）"
                                style="min-height: 50px;"
                                onkeypress="handleKeywordEnter(event)">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
-                            <button type="button" class="add-button" onclick="addKeywordFromButton()" style="margin-top: 0;">
-                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                </svg>
-                                キーワードを追加
-                            </button>
-                            <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin: 0;">
-                                Enterキーまたはボタンで追加
-                            </p>
-                        </div>
+                        <button type="button" class="btn btn-primary" onclick="addKeywordFromButton()" style="margin-top: 0.75rem; width: auto; padding: 0.75rem 1.5rem;">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            タグとして追加
+                        </button>
+                        <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin-top: 0.5rem;">
+                            💡 Enterキーまたはボタンでタグ化されます
+                        </p>
                     </div>
                     <div class="keywords-container" id="keywordsContainer"></div>
+                    <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin-top: 0.5rem; text-align: center;" id="keywordHint"></p>
                 </div>
 
                 <!-- Work 2: Clustering -->
@@ -1271,8 +1283,20 @@
                 tag.className = 'keyword-tag';
                 tag.textContent = keyword;
                 tag.onclick = () => removeKeyword(index);
+                tag.title = 'クリックで削除';
                 container.appendChild(tag);
             });
+            
+            // Show/hide hint about deleting tags
+            const hint = document.getElementById('keywordHint');
+            if (hint) {
+                if (state.keywords.length > 0) {
+                    hint.textContent = '💡 タグをクリックすると削除できます';
+                    hint.style.display = 'block';
+                } else {
+                    hint.style.display = 'none';
+                }
+            }
 
             // Render groups
             renderGroups();
