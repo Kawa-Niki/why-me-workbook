@@ -1535,6 +1535,12 @@
             size: A4;
         }
         
+        @media print {
+            @page {
+                margin: 2cm;
+            }
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -1553,7 +1559,7 @@
         
         .header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             padding-bottom: 2rem;
             border-bottom: 2px solid var(--border);
             page-break-after: avoid;
@@ -1632,7 +1638,7 @@
         }
         
         .day-section {
-            margin: 2.5rem 0;
+            margin: 3rem 0;
             page-break-inside: avoid;
         }
         
@@ -1641,10 +1647,14 @@
             font-size: 1.35rem;
             font-weight: 700;
             color: var(--ink);
-            margin: 2rem 0 1.25rem 0;
-            padding-top: 1.5rem;
+            margin: 2.5rem 0 1.25rem 0;
+            padding-top: 1.75rem;
             border-top: 1px solid var(--border);
             page-break-after: avoid;
+        }
+        
+        h2:first-of-type {
+            margin-top: 1.5rem;
         }
         
         h3 {
@@ -1744,13 +1754,13 @@
         }
         
         .footer {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
+            margin-top: 2.5rem;
+            padding-top: 1.75rem;
             border-top: 1px solid var(--border);
             text-align: center;
             color: var(--ink-light);
             font-size: 0.85rem;
-            page-break-before: avoid;
+            page-break-inside: avoid;
         }
         
         @media print {
@@ -1773,6 +1783,11 @@
             .group {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+            }
+            
+            /* Hide browser URL and other print artifacts */
+            @page {
+                margin: 2cm;
             }
         }
     </style>
