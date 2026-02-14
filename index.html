@@ -1252,10 +1252,6 @@
 
         // Day 2: Keywords and Clustering
         function renderDay2() {
-            // Clear keyword input field
-            const keywordInput = document.getElementById('keywordInput');
-            if (keywordInput) keywordInput.value = '';
-            
             // Render keywords
             const container = document.getElementById('keywordsContainer');
             container.innerHTML = '';
@@ -1980,9 +1976,16 @@
             // Clear localStorage
             localStorage.clear();
             
-            // Clear all input fields
-            const keywordInput = document.getElementById('keywordInput');
-            if (keywordInput) keywordInput.value = '';
+            // Clear ALL input fields on the page
+            document.querySelectorAll('input[type="text"], textarea, input[type="range"]').forEach(field => {
+                if (field.type === 'range') {
+                    field.value = 5;
+                    const valueDisplay = document.getElementById('confidenceValue');
+                    if (valueDisplay) valueDisplay.textContent = '5';
+                } else {
+                    field.value = '';
+                }
+            });
             
             // Reset state completely
             state = {
