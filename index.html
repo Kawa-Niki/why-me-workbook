@@ -630,6 +630,110 @@
             display: none !important;
         }
         
+        /* 2-column layout for Day 2 */
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* Reference Panel */
+        .reference-panel {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            max-height: calc(100vh - 4rem);
+        }
+        
+        .reference-header {
+            background: var(--accent-warm);
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .reference-header:hover {
+            background: #E66835;
+        }
+        
+        #referenceToggleIcon {
+            transition: transform 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        #referenceToggleIcon.collapsed {
+            transform: rotate(-90deg);
+        }
+        
+        .reference-content {
+            background: white;
+            border: 2px solid var(--accent-warm);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: calc(100vh - 10rem);
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+        
+        .reference-content.collapsed {
+            max-height: 0;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .reference-list {
+            padding: 1.25rem;
+        }
+        
+        .reference-item {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .reference-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .reference-number {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--accent-warm);
+            min-width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(217, 118, 66, 0.1);
+            border-radius: 50%;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+        
+        .reference-text {
+            flex: 1;
+            color: var(--ink);
+        }
+        
+        .work-area {
+            min-width: 0;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .landing {
@@ -651,6 +755,21 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+            }
+            
+            /* Stack layout on mobile */
+            .two-column-layout {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .reference-panel {
+                position: static;
+                max-height: none;
+            }
+            
+            .reference-content {
+                max-height: 400px;
             }
         }
         
@@ -690,6 +809,69 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
+        }
+        
+        /* Custom Modal */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 36, 22, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .custom-modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--cream);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(44, 36, 22, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-title {
+            font-family: var(--font-sans);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 1rem;
+        }
+        
+        .modal-message {
+            color: var(--ink-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .modal-buttons .btn {
+            flex: 1;
         }
     </style>
 </head>
@@ -731,8 +913,8 @@
                     <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                     </svg>
-                    <h3>3日分を凝縮</h3>
-                    <p>本編の核心部分を体験できます</p>
+                    <h3>6ステップで完結</h3>
+                    <p>本編の核心部分を6つのステップで体験できます</p>
                 </div>
             </div>
         </div>
@@ -746,10 +928,10 @@
                 <div class="progress-fill" id="progressFill" style="width: 0%"></div>
             </div>
 
-            <!-- Day 1 -->
-            <div id="day1" class="day hidden">
+            <!-- STEP 1 -->
+            <div id="step1" class="day hidden">
                 <div class="day-header">
-                    <div class="day-number">Day 1 of 3</div>
+                    <div class="day-number">STEP 1 of 6</div>
                     <h2 class="day-title">人生の痕跡を集める</h2>
                     <p class="day-description">
                         まず、あなた自身を見つめます。ビジネスアイデアを考えるのではありません。あなたの中にある「源泉」を探ります。
@@ -810,15 +992,9 @@
                     </button>
                 </div>
 
-                <div class="nav-buttons">
-                    <button class="btn btn-secondary" onclick="showLanding()">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                        最初に戻る
-                    </button>
-                    <button class="btn btn-primary" onclick="goToDay2()" id="day1Next">
-                        Day 2へ進む
+                <div class="nav-buttons" style="justify-content: flex-end;">
+                    <button class="btn btn-primary" onclick="goToStep(2)" id="step1Next">
+                        STEP 2へ進む
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                         </svg>
@@ -826,211 +1002,349 @@
                 </div>
             </div>
 
-            <!-- Day 2 -->
-            <div id="day2" class="day hidden">
+            <!-- STEP 2: Keywords Extraction -->
+            <div id="step2" class="day hidden">
                 <div class="day-header">
-                    <div class="day-number">Day 2 of 3</div>
-                    <h2 class="day-title">パターンを見つける</h2>
+                    <div class="day-number">STEP 2 of 6</div>
+                    <h2 class="day-title">キーワードを抽出する</h2>
                     <p class="day-description">
-                        昨日集めた痕跡の中から「パターン」を見つけていきます。バラバラに見える経験の中に、実は一貫したテーマが隠れています。
+                        STEP 1で書いた内容から、繰り返し出てくる「キーワード」を抽出します。これらのキーワードは次のステップでグループ分けの軸になります。<br>
+                        正解はありません。これはあなたの価値観を言語化するためのワークです。自由に言葉を探してください。
                     </p>
                 </div>
 
-                <!-- Work 1: Keywords -->
-                <div class="section">
-                    <h3 class="section-title">
-                        <span class="section-number">1</span>
-                        キーワードを抽出する
-                    </h3>
-                    <p class="section-description">
-                        Day 1で書いた内容から、繰り返し出てくる「キーワード」を抽出し、タグ化しましょう。何度も出てくる言葉、あなたが大切にしている価値観を表す言葉など。
-                    </p>
-                    <div class="input-group">
-                        <input type="text" 
-                               class="text-input" 
-                               id="keywordInput" 
-                               placeholder="キーワードを入力（例：自由、本音、つながり、表現...）"
-                               style="min-height: 50px;"
-                               onkeypress="handleKeywordEnter(event)">
-                        <button type="button" class="btn btn-primary" onclick="addKeywordFromButton()" style="margin-top: 0.75rem; width: auto; padding: 0.75rem 1.5rem;">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                            タグとして追加
-                        </button>
-                        <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin-top: 0.5rem;">
-                            💡 Enterキーまたはボタンでタグ化されます
-                        </p>
+                <!-- 2-column layout container -->
+                <div class="two-column-layout">
+                    <!-- Left: STEP 1 Reference Panel -->
+                    <div class="reference-panel">
+                        <div class="reference-header" onclick="toggleReference()">
+                            <span id="referenceToggleIcon">▼</span>
+                            <span>STEP 1の内容を見る</span>
+                        </div>
+                        <div class="reference-content" id="step1Reference">
+                            <div class="reference-list" id="step1ReferenceList"></div>
+                        </div>
                     </div>
-                    <div class="keywords-container" id="keywordsContainer"></div>
-                    <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin-top: 0.5rem; text-align: center;" id="keywordHint"></p>
-                </div>
 
-                <!-- Work 2: Clustering -->
-                <div class="section">
-                    <h3 class="section-title">
-                        <span class="section-number">2</span>
-                        グループに分ける
-                    </h3>
-                    <p class="section-description">
-                        Day 1で書いた違和感・喜び・怒りを、3〜5個のグループに分けてみます。「これとこれは同じテーマだな」と感じるもの同士をまとめてください。
-                    </p>
-                    <div class="groups-container" id="groupsContainer"></div>
-                    <button class="add-button" onclick="addGroup()">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        グループを追加
-                    </button>
-                </div>
-
-                <!-- Work 3: Deep Pattern -->
-                <div class="section">
-                    <h3 class="section-title">
-                        <span class="section-number">3</span>
-                        深層パターンを発見する
-                    </h3>
-                    <p class="section-description">
-                        グループを眺めながら、以下の問いに答えてください。
-                    </p>
-                    <div class="input-group">
-                        <label class="input-label">繰り返し出てくるテーマは？</label>
-                        <textarea class="text-input" id="theme" placeholder="複数のグループに共通するテーマがあれば..."></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">あなたが大切にしている価値観は？</label>
-                        <textarea class="text-input" id="values" placeholder="これらの経験から見える価値観..."></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">あなたが「許せない」ものは？</label>
-                        <textarea class="text-input" id="unacceptable" placeholder="違和感や怒りの奥にある「これだけは譲れない」..."></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">あなたが「こうあってほしい」世界は？</label>
-                        <textarea class="text-input" id="idealWorld" placeholder="もし違和感が解消されたら..."></textarea>
-                    </div>
-                </div>
-
-                <div class="nav-buttons">
-                    <button class="btn btn-secondary" onclick="goToDay1()">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                        Day 1へ戻る
-                    </button>
-                    <button class="btn btn-primary" onclick="goToDay3()">
-                        Day 3へ進む
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Day 3 -->
-            <div id="day3" class="day hidden">
-                <div class="day-header">
-                    <div class="day-number">Day 3 of 3</div>
-                    <h2 class="day-title">問いの原型を作る</h2>
-                    <p class="day-description">
-                        痕跡を集め、パターンを見つけました。今日は、その奥にある「あなたの問い」を言葉にします。
-                    </p>
-                </div>
-
-                <!-- Work 1: Why Digging -->
-                <div class="section">
-                    <h3 class="section-title">
-                        <span class="section-number">1</span>
-                        「なぜ」で掘り下げる
-                    </h3>
-                    <p class="section-description">
-                        Day 2で見つけたパターンやテーマを、「なぜ？」で3〜5回掘り下げていきます。
-                    </p>
-                    <div class="input-group">
-                        <label class="input-label">Day 2で見つけた最も重要なテーマ</label>
-                        <textarea class="text-input" id="mainTheme" placeholder="例：人が本音を言えない場面が気になる"></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">なぜ1：なぜ私はそれが気になるのか？</label>
-                        <textarea class="text-input" id="why1" placeholder=""></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">なぜ2：</label>
-                        <textarea class="text-input" id="why2" placeholder=""></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">なぜ3：</label>
-                        <textarea class="text-input" id="why3" placeholder=""></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">なぜ4：（必要に応じて）</label>
-                        <textarea class="text-input" id="why4" placeholder=""></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">なぜ5：（必要に応じて）</label>
-                        <textarea class="text-input" id="why5" placeholder=""></textarea>
-                    </div>
-                </div>
-
-                <!-- Work 2: Draft Questions -->
-                <div class="section">
-                    <h3 class="section-title">
-                        <span class="section-number">2</span>
-                        問いの1st draftを作る
-                    </h3>
-                    <p class="section-description">
-                        「なぜ」で掘り下げた内容をもとに、あなたの問いを3〜5個、書いてみてください。完璧な文章でなくていいです。
-                    </p>
-                    <div class="list-container" id="questionsList"></div>
-                    <button class="add-button" onclick="addQuestion()">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        問いを追加
-                    </button>
-                </div>
-
-                <!-- Work 3: Select Final Question -->
-                <div class="section">
-                    <h3 class="section-title">
-                        <span class="section-number">3</span>
-                        暫定版「自分の問い」を選ぶ
-                    </h3>
-                    <p class="section-description">
-                        上で書いた問いの中から、今の時点で最もしっくりくるものを1つ選んでください。
-                    </p>
-                    <div class="input-group">
-                        <label class="input-label">あなたの問い（暫定版）</label>
-                        <textarea class="text-input" id="finalQuestion" placeholder="考えるだけでエネルギーが湧いてくる問いを..."></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">この問いを考えるとき、どんな感覚がありますか？</label>
-                        <textarea class="text-input" id="questionFeeling" placeholder=""></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">なぜこの問いを選びましたか？</label>
-                        <textarea class="text-input" id="whyThisQuestion" placeholder=""></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">確信度（1〜10）</label>
-                        <p style="color: var(--ink-light); font-size: 0.9rem; margin-bottom: 1rem;">
-                            この問いに対して、どの程度確信が持てましたか？スライダーを動かして10段階で評価してください。
-                        </p>
-                        <input type="range" min="1" max="10" value="5" id="confidence" 
-                               style="width: 100%; height: 40px; cursor: pointer;"
-                               oninput="document.getElementById('confidenceValue').textContent = this.value">
-                        <div style="text-align: center; margin-top: 0.5rem; font-family: var(--font-sans); font-size: 1.5rem; font-weight: 700; color: var(--accent-warm);">
-                            <span id="confidenceValue">5</span> / 10
+                    <!-- Right: Work Area -->
+                    <div class="work-area">
+                        <!-- Work 1: Keywords -->
+                        <div class="section">
+                            <h3 class="section-title">
+                                <span class="section-number">1</span>
+                                キーワードを抽出してタグ化
+                            </h3>
+                            <p class="section-description">
+                                STEP 1で書いた内容から、繰り返し出てくる「キーワード」を抽出し、タグ化しましょう。何度も出てくる言葉、あなたが大切にしている価値観を表す言葉など。3〜5個を目安に抽出してください。
+                            </p>
+                            <div class="input-group">
+                                <input type="text" 
+                                       class="text-input" 
+                                       id="keywordInput" 
+                                       placeholder="キーワードを入力（例：自由、本音、つながり、表現...）"
+                                       style="min-height: 50px;"
+                                       onkeypress="handleKeywordEnter(event)">
+                                <button type="button" class="btn btn-primary" onclick="addKeywordFromButton()" style="margin-top: 0.75rem; width: auto; padding: 0.75rem 1.5rem;">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                    タグとして追加
+                                </button>
+                                <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin-top: 0.5rem;">
+                                    💡 Enterキーまたはボタンでタグ化されます
+                                </p>
+                            </div>
+                            <div class="keywords-container" id="keywordsContainer"></div>
+                            <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin-top: 0.5rem; text-align: center;" id="keywordHint"></p>
                         </div>
                     </div>
                 </div>
 
                 <div class="nav-buttons">
-                    <button class="btn btn-secondary" onclick="goToDay2()">
+                    <button class="btn btn-secondary" onclick="goToStep(1)">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
-                        Day 2へ戻る
+                        STEP 1へ戻る
+                    </button>
+                    <button class="btn btn-primary" onclick="goToStep(3)">
+                        STEP 3へ進む
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Grouping -->
+            <div id="step3" class="day hidden">
+                <div class="day-header">
+                    <div class="day-number">STEP 3 of 6</div>
+                    <h2 class="day-title">グルーピング</h2>
+                    <p class="day-description">
+                        キーワードをもとにエピソードをグループ分けします。1つのエピソードが複数のグループに入っても構いません。
+                    </p>
+                </div>
+
+                <!-- 2-column layout container -->
+                <div class="two-column-layout">
+                    <!-- Left: Episode Reference Panel -->
+                    <div class="reference-panel">
+                        <div class="reference-header" onclick="toggleReferenceStep3()">
+                            <span id="referenceToggleIconStep3">▼</span>
+                            <span>STEP 1のエピソード一覧</span>
+                        </div>
+                        <div class="reference-content" id="step3Reference">
+                            <div class="reference-list" id="step3ReferenceList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Work Area -->
+                    <div class="work-area">
+                        <div class="section">
+                            <h3 class="section-title">
+                                <span class="section-number">1</span>
+                                キーワードベースのグループ
+                            </h3>
+                            <p class="section-description">
+                                STEP 2で抽出したキーワードをもとにグループが作られています。各グループに当てはまるエピソードの番号をカンマ区切りで入力してください。（例：1, 3, 5）
+                            </p>
+                            <div id="keywordGroupsContainer"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="goToStep(2)">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        STEP 2へ戻る
+                    </button>
+                    <button class="btn btn-primary" onclick="goToStep(4)">
+                        STEP 4へ進む
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4: Theme Discovery -->
+            <div id="step4" class="day hidden">
+                <div class="day-header">
+                    <div class="day-number">STEP 4 of 6</div>
+                    <h2 class="day-title">テーマを発見する</h2>
+                    <p class="day-description">
+                        グループを眺めながら、深層にあるパターンを発見していきます。
+                    </p>
+                </div>
+
+                <!-- 2-column layout container -->
+                <div class="two-column-layout">
+                    <!-- Left: Groups Reference Panel -->
+                    <div class="reference-panel">
+                        <div class="reference-header" onclick="toggleReferenceStep4()">
+                            <span id="referenceToggleIconStep4">▼</span>
+                            <span>STEP 3のグループ一覧</span>
+                        </div>
+                        <div class="reference-content" id="step4Reference">
+                            <div class="reference-list" id="step4ReferenceList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Work Area -->
+                    <div class="work-area">
+                        <div class="section">
+                            <h3 class="section-title">
+                                <span class="section-number">1</span>
+                                深層パターンを発見する
+                            </h3>
+                            <p class="section-description">
+                                グループを眺めながら、以下の問いに答えてください。
+                            </p>
+                            <div class="input-group">
+                                <label class="input-label">繰り返し出てくるテーマは？</label>
+                                <textarea class="text-input" id="theme" placeholder="複数のグループに共通するテーマがあれば..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">あなたが大切にしている価値観は？</label>
+                                <textarea class="text-input" id="values" placeholder="これらの経験から見える価値観..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">あなたが「許せない」ものは？</label>
+                                <textarea class="text-input" id="unacceptable" placeholder="違和感や怒りの奥にある「これだけは譲れない」..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">あなたが「こうあってほしい」世界は？</label>
+                                <textarea class="text-input" id="idealWorld" placeholder="もし違和感が解消されたら..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="goToStep(3)">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        STEP 3へ戻る
+                    </button>
+                    <button class="btn btn-primary" onclick="goToStep(5)">
+                        STEP 5へ進む
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 5: Why Digging -->
+            <div id="step5" class="day hidden">
+                <div class="day-header">
+                    <div class="day-number">STEP 5 of 6</div>
+                    <h2 class="day-title">なぜを掘り下げる</h2>
+                    <p class="day-description">
+                        STEP 4で見つけたテーマを「なぜ？」で3〜5回掘り下げていきます。
+                    </p>
+                </div>
+
+                <!-- 2-column layout container -->
+                <div class="two-column-layout">
+                    <!-- Left: Theme Reference Panel -->
+                    <div class="reference-panel">
+                        <div class="reference-header" onclick="toggleReferenceStep5()">
+                            <span id="referenceToggleIconStep5">▼</span>
+                            <span>STEP 4のテーマを見る</span>
+                        </div>
+                        <div class="reference-content" id="step5Reference">
+                            <div class="reference-list" id="step5ReferenceList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Work Area -->
+                    <div class="work-area">
+                        <!-- Work 1: Question Creation -->
+                        <div class="section">
+                            <h3 class="section-title">
+                                <span class="section-number">1</span>
+                                問いの原型を作る
+                            </h3>
+                            <p class="section-description">
+                                STEP 4で見つけた内容を見ながら、それを「問い」の形に変換していきます。<br>
+                                以下のヒントを参考に、あなたの問いを3〜5個作ってみてください。
+                            </p>
+                            
+                            <div style="background: rgba(122, 155, 118, 0.08); border-left: 3px solid var(--accent-sage); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <h4 style="font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 1rem;">問いづくりのヒント</h4>
+                                
+                                <div style="margin-bottom: 1.25rem;">
+                                    <div style="font-family: var(--font-sans); font-weight: 600; color: var(--accent-warm); margin-bottom: 0.5rem;">視点1：課題・機能</div>
+                                    <div style="color: var(--ink-light); font-size: 0.95rem; line-height: 1.6;">
+                                        ・「〇〇（テーマ）はなぜ起きるのか？」<br>
+                                        ・「〇〇（許せないもの）をなくすにはどうすればいいか？」
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 1.25rem;">
+                                    <div style="font-family: var(--font-sans); font-weight: 600; color: var(--accent-warm); margin-bottom: 0.5rem;">視点2：感情・体験</div>
+                                    <div style="color: var(--ink-light); font-size: 0.95rem; line-height: 1.6;">
+                                        ・「どうすれば人は〇〇（価値観）を感じられるか？」<br>
+                                        ・「〇〇を大切にできる環境とは？」
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 0;">
+                                    <div style="font-family: var(--font-sans); font-weight: 600; color: var(--accent-warm); margin-bottom: 0.5rem;">視点3：関係性・社会</div>
+                                    <div style="color: var(--ink-light); font-size: 0.95rem; line-height: 1.6;">
+                                        ・「〇〇（理想の世界）を実現するには何が必要か？」<br>
+                                        ・「〇〇を大切にする社会はどう作れるか？」
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="list-container" id="questionsList"></div>
+                            <button class="add-button" onclick="addQuestion()">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                問いを追加
+                            </button>
+                            <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin-top: 1rem; text-align: center;">
+                                💡 上のヒントは参考です。自由に問いを作ってください。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="goToStep(4)">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        STEP 4へ戻る
+                    </button>
+                    <button class="btn btn-primary" onclick="goToStep(6)">
+                        STEP 6へ進む
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 6: Question Creation -->
+            <div id="step6" class="day hidden">
+                <div class="day-header">
+                    <div class="day-number">STEP 6 of 6</div>
+                    <h2 class="day-title">問いの創造</h2>
+                    <p class="day-description">
+                        問いの原型ができました。その中から最もしっくりくるものを選びましょう。それがあなたの追求すべき最初の問いとなります。
+                    </p>
+                </div>
+
+                <!-- 2-column layout container -->
+                <div class="two-column-layout">
+                    <!-- Left: Why & Questions Reference Panel -->
+                    <div class="reference-panel">
+                        <div class="reference-header" onclick="toggleReferenceStep6()">
+                            <span id="referenceToggleIconStep6">▼</span>
+                            <span>STEP 5の内容を見る</span>
+                        </div>
+                        <div class="reference-content" id="step6Reference">
+                            <div class="reference-list" id="step6ReferenceList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Work Area -->
+                    <div class="work-area">
+                        <!-- Work 3: Select Final Question -->
+                        <div class="section">
+                            <h3 class="section-title">
+                                <span class="section-number">1</span>
+                                暫定版「自分の問い」を選ぶ
+                            </h3>
+                            <p class="section-description">
+                                STEP 5で書いた問いの中から、今の時点で最もしっくりくるものを1つ選んでください。
+                            </p>
+                            <div class="input-group">
+                                <label class="input-label">あなたの問い（暫定版）</label>
+                                <textarea class="text-input" id="finalQuestion" placeholder="考えるだけでエネルギーが湧いてくる問いを..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">なぜこの問いを選びましたか？</label>
+                                <textarea class="text-input" id="whyThisQuestion" placeholder=""></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="goToStep(5)">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        STEP 5へ戻る
                     </button>
                     <button class="btn btn-primary" onclick="completeWorkbook()">
                         完了する
@@ -1057,7 +1371,6 @@
                     <div class="your-question">
                         <div class="question-label">あなたの問い</div>
                         <div class="question-text" id="displayQuestion"></div>
-                        <div class="question-confidence">確信度：<span id="displayConfidence"></span> / 10</div>
                     </div>
 
                     <div class="completion-actions">
@@ -1067,23 +1380,33 @@
                             </svg>
                             PDFで保存する
                         </button>
-                        <p style="font-size: 0.85rem; color: var(--ink-light); text-align: center; margin-top: 0.5rem; font-style: italic;">
+                        <p style="font-size: 0.85rem; color: var(--ink-light); text-align: center; margin-top: 0.5rem; margin-bottom: 2rem; font-style: italic;">
                             印刷ダイアログが開きます。「送信先」で「PDFに保存」を選択してください
                         </p>
-                        <button class="btn btn-secondary" onclick="resetWorkbook()" style="width: 100%;">
+                        
+                        <div style="padding: 2rem; background: rgba(217, 118, 66, 0.05); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem;">
+                            <h3 style="font-family: var(--font-sans); font-size: 1.1rem; margin-bottom: 1rem; color: var(--ink);">NEXT STEP</h3>
+                            <p style="color: var(--ink-light); line-height: 1.8; text-align: left;">
+                                この体験版では、本編のPhase 1【自分の源泉を探る】を体験してもらいました。<br><br>
+                                本編のワークブックでは、次にこの"問い"を共有できる他者の存在を想像します。<br>
+                                さらにその"共通の問い"をもとに、仮説【解決すべき課題】を、想定します。<br>
+                                【解決すべき課題】が決まったら本格的に他者へのヒアリングを行っていきます。<br><br>
+                                このように"自分の意見"と"現実の他者"を行き来しながら、1か月間で【あなただけの事業アイデア】を生み出すことが、このワークブックの目的です。
+                            </p>
+                        </div>
+                        
+                        <button class="btn btn-secondary" onclick="goToStep(6)" style="width: 100%;">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            STEP 6へ戻る
+                        </button>
+                        <button class="btn btn-secondary" data-action="reset" style="width: 100%; background: white; color: var(--ink-light); border: 1px solid var(--border); margin-top: 0.5rem;">
                             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                             </svg>
-                            最初に戻る
+                            最初に戻る（入力データがリセットされます）
                         </button>
-                    </div>
-
-                    <div style="margin-top: 3rem; padding: 2rem; background: rgba(217, 118, 66, 0.05); border-radius: 12px; border: 1px solid var(--border);">
-                        <h3 style="font-family: var(--font-sans); font-size: 1.1rem; margin-bottom: 1rem; color: var(--ink);">次のステップ</h3>
-                        <p style="color: var(--ink-light); line-height: 1.8; text-align: left;">
-                            この体験版では、Phase 1（自分の源泉を探る）を完了しました。<br>
-                            本編のワークブックでは、この問いを外の世界へ投影し（Phase 2-3）、「なぜ私がやるのか」を徹底的に問い直し（Phase 4）、独自の解決策を創造します（Phase 5）。
-                        </p>
                     </div>
                 </div>
             </div>
@@ -1096,10 +1419,28 @@
         自動保存しました
     </div>
 
+    <!-- Custom Confirmation Modal -->
+    <div class="custom-modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-title">データをリセットしますか？</div>
+            <div class="modal-message">
+                本当に最初に戻りますか？<br>
+                入力したすべてのデータが削除されます。<br><br>
+                <strong>※この操作は取り消せません。</strong>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" data-action="cancel-reset">キャンセル</button>
+                <button class="btn btn-primary" data-action="confirm-reset" style="background: #D97642;">
+                    リセットする
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // State Management
         let state = {
-            currentDay: 0,
+            currentStep: 0,
             iwakan: [],
             yorokobi: [],
             ikari: [],
@@ -1109,13 +1450,9 @@
             values: '',
             unacceptable: '',
             idealWorld: '',
-            mainTheme: '',
-            whys: ['', '', '', '', ''],
             questions: [],
             finalQuestion: '',
-            questionFeeling: '',
-            whyThisQuestion: '',
-            confidence: 5
+            whyThisQuestion: ''
         };
 
         // Storage utilities
@@ -1154,20 +1491,41 @@
             const hasState = loadState();
             
             // Don't restore if on completion screen - always start fresh
-            if (hasState && state.currentDay > 0 && state.currentDay < 4) {
-                // Resume from saved state (Day 1-3 only)
+            if (hasState && state.currentStep > 0 && state.currentStep < 7) {
+                // Resume from saved state (STEP 1-6 only)
                 document.getElementById('landing').classList.remove('landing');
                 document.getElementById('landing').style.display = 'none';
                 document.getElementById('app').classList.add('active');
-                goToDay(state.currentDay);
+                goToStep(state.currentStep);
             } else {
                 // Initialize with first items or restart from landing
                 state.iwakan = state.iwakan || [''];
                 state.yorokobi = state.yorokobi || [''];
                 state.ikari = state.ikari || [''];
-                state.groups = state.groups || [{ name: '', items: [], color: '#D97642' }];
+                state.groups = state.groups || [];
                 state.questions = state.questions || [''];
-                state.currentDay = 0; // Reset to landing
+                state.currentStep = 0; // Reset to landing
+            }
+            
+            // Add event listeners for reset buttons
+            setupResetButtons();
+        }
+
+        function setupResetButtons() {
+            // Find all reset buttons and add click listeners
+            document.querySelectorAll('[data-action="reset"]').forEach(button => {
+                button.addEventListener('click', confirmReset);
+            });
+            
+            // Modal buttons
+            const modalCancelBtn = document.querySelector('[data-action="cancel-reset"]');
+            if (modalCancelBtn) {
+                modalCancelBtn.addEventListener('click', closeModal);
+            }
+            
+            const modalConfirmBtn = document.querySelector('[data-action="confirm-reset"]');
+            if (modalConfirmBtn) {
+                modalConfirmBtn.addEventListener('click', confirmResetAction);
             }
         }
 
@@ -1175,7 +1533,7 @@
         function startWorkbook() {
             document.getElementById('landing').style.display = 'none';
             document.getElementById('app').classList.add('active');
-            goToDay(1);
+            goToStep(1);
         }
 
         function showLanding() {
@@ -1189,17 +1547,22 @@
         }
 
         // Navigation
-        function goToDay(day) {
-            // Hide all days
+        function goToStep(step) {
+            // Hide all steps
             document.querySelectorAll('.day').forEach(d => d.classList.add('hidden'));
             
-            // Show target day
-            state.currentDay = day;
-            const dayElement = document.getElementById(`day${day}`);
-            if (dayElement) {
-                dayElement.classList.remove('hidden');
-                window.scrollTo(0, 0);
-            } else if (day === 4) {
+            // Show target step
+            state.currentStep = step;
+            
+            // Handle step display
+            if (step >= 1 && step <= 6) {
+                const stepElement = document.getElementById(`step${step}`);
+                if (stepElement) {
+                    stepElement.classList.remove('hidden');
+                    window.scrollTo(0, 0);
+                }
+            } else if (step === 7) {
+                // Completion screen
                 document.getElementById('completion').classList.remove('hidden');
                 window.scrollTo(0, 0);
             }
@@ -1207,25 +1570,26 @@
             // Update progress
             updateProgress();
             
-            // Render content
-            if (day === 1) renderDay1();
-            if (day === 2) renderDay2();
-            if (day === 3) renderDay3();
+            // Render content based on step
+            switch(step) {
+                case 1: renderStep1(); break;
+                case 2: renderStep2(); break;
+                case 3: renderStep3(); break;
+                case 4: renderStep4(); break;
+                case 5: renderStep5(); break;
+                case 6: renderStep6(); break;
+            }
             
             saveState();
         }
 
         function updateProgress() {
-            const progress = (state.currentDay / 4) * 100;
+            const progress = (state.currentStep / 7) * 100; // 7 = 6 steps + completion
             document.getElementById('progressFill').style.width = progress + '%';
         }
 
-        function goToDay1() { goToDay(1); }
-        function goToDay2() { goToDay(2); }
-        function goToDay3() { goToDay(3); }
-
-        // Day 1: List Management
-        function renderDay1() {
+        // STEP 1: List Management
+        function renderStep1() {
             renderList('iwakanList', state.iwakan, 'iwakan');
             renderList('yorokobiList', state.yorokobi, 'yorokobi');
             renderList('ikariList', state.ikari, 'ikari');
@@ -1257,24 +1621,27 @@
 
         function addIwakan() {
             state.iwakan.push('');
-            renderDay1();
+            renderStep1();
             saveState();
         }
 
         function addYorokobi() {
             state.yorokobi.push('');
-            renderDay1();
+            renderStep1();
             saveState();
         }
 
         function addIkari() {
             state.ikari.push('');
-            renderDay1();
+            renderStep1();
             saveState();
         }
 
-        // Day 2: Keywords and Clustering
-        function renderDay2() {
+        // STEP 2: Keywords Extraction
+        function renderStep2() {
+            // Populate STEP 1 reference
+            populateStep1Reference();
+            
             // Render keywords
             const container = document.getElementById('keywordsContainer');
             container.innerHTML = '';
@@ -1297,27 +1664,6 @@
                     hint.style.display = 'none';
                 }
             }
-
-            // Render groups
-            renderGroups();
-
-            // Load text inputs
-            document.getElementById('theme').value = state.theme;
-            document.getElementById('values').value = state.values;
-            document.getElementById('unacceptable').value = state.unacceptable;
-            document.getElementById('idealWorld').value = state.idealWorld;
-
-            // Add listeners
-            ['theme', 'values', 'unacceptable', 'idealWorld'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el && !el.dataset.listenerAdded) {
-                    el.addEventListener('input', (e) => {
-                        state[id] = e.target.value;
-                        saveState();
-                    });
-                    el.dataset.listenerAdded = 'true';
-                }
-            });
         }
 
         function handleKeywordEnter(event) {
@@ -1337,115 +1683,171 @@
             if (value && !state.keywords.includes(value)) {
                 state.keywords.push(value);
                 input.value = '';
-                renderDay2();
+                renderStep2();
                 saveState();
             }
         }
 
         function removeKeyword(index) {
             state.keywords.splice(index, 1);
-            renderDay2();
+            renderStep2();
             saveState();
         }
-
-        function renderGroups() {
-            const container = document.getElementById('groupsContainer');
+        
+        function populateStep1Reference() {
+            const container = document.getElementById('step1ReferenceList');
+            if (!container) return;
+            
             container.innerHTML = '';
             
-            const colors = ['#D97642', '#7A9B76', '#C9A961', '#8B7A99', '#6B8E9B'];
+            // Combine all STEP 1 items into a single numbered list
+            const allItems = [
+                ...state.iwakan.filter(i => i && i.trim()),
+                ...state.yorokobi.filter(i => i && i.trim()),
+                ...state.ikari.filter(i => i && i.trim())
+            ];
             
-            state.groups.forEach((group, index) => {
+            if (allItems.length === 0) {
+                container.innerHTML = '<div style="padding: 1rem; text-align: center; color: var(--ink-light); font-style: italic;">STEP 1の内容がまだありません</div>';
+                return;
+            }
+            
+            allItems.forEach((item, index) => {
                 const div = document.createElement('div');
-                div.className = 'group';
-                
-                const allItems = [
-                    ...state.iwakan.filter(i => i.trim()),
-                    ...state.yorokobi.filter(i => i.trim()),
-                    ...state.ikari.filter(i => i.trim())
-                ];
-                
+                div.className = 'reference-item';
                 div.innerHTML = `
-                    <div class="group-header">
-                        <div class="group-color" style="background: ${colors[index % colors.length]}"></div>
-                        <input type="text" 
-                               class="group-name-input" 
-                               value="${group.name}" 
-                               placeholder="グループ名..."
-                               oninput="updateGroupName(${index}, this.value)">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">このグループに含まれる項目（番号で）</label>
-                        <input type="text" 
-                               class="text-input" 
-                               value="${group.items.join(', ')}" 
-                               placeholder="例：1, 3, 5（Day 1の番号）"
-                               style="min-height: 50px;"
-                               oninput="updateGroupItems(${index}, this.value)">
-                    </div>
+                    <div class="reference-number">${index + 1}</div>
+                    <div class="reference-text">${item.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                 `;
                 container.appendChild(div);
             });
         }
+        
+        function toggleReference() {
+            const content = document.getElementById('step1Reference');
+            const icon = document.getElementById('referenceToggleIcon');
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                icon.classList.remove('collapsed');
+            } else {
+                content.classList.add('collapsed');
+                icon.classList.add('collapsed');
+            }
+        }
 
-        function updateGroupName(index, value) {
-            state.groups[index].name = value;
+        // STEP 3: Grouping (Keyword-based)
+        function renderStep3() {
+            // Populate STEP 1 episodes reference
+            populateStep1Reference();
+            const refList = document.getElementById('step3ReferenceList');
+            if (refList) {
+                refList.innerHTML = document.getElementById('step1ReferenceList').innerHTML;
+            }
+            
+            // Generate keyword-based groups
+            generateKeywordGroups();
+        }
+
+        function generateKeywordGroups() {
+            const container = document.getElementById('keywordGroupsContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (state.keywords.length === 0) {
+                container.innerHTML = '<p style="padding: 2rem; text-align: center; color: var(--ink-light); font-style: italic;">STEP 2でキーワードを追加してください</p>';
+                return;
+            }
+            
+            const colors = ['#D97642', '#7A9B76', '#C9A961', '#8B7A99', '#6B8E9B'];
+            
+            // Ensure groups array matches keywords
+            while (state.groups.length < state.keywords.length) {
+                state.groups.push({ 
+                    name: '', 
+                    items: [], 
+                    color: colors[state.groups.length % colors.length] 
+                });
+            }
+            
+            // Remove excess groups if keywords were deleted
+            if (state.groups.length > state.keywords.length) {
+                state.groups = state.groups.slice(0, state.keywords.length);
+            }
+            
+            // Update group names from keywords
+            state.keywords.forEach((keyword, index) => {
+                if (state.groups[index]) {
+                    state.groups[index].name = keyword;
+                    state.groups[index].color = colors[index % colors.length];
+                }
+            });
+            
+            // Render groups
+            state.keywords.forEach((keyword, index) => {
+                const group = state.groups[index];
+                const div = document.createElement('div');
+                div.className = 'group';
+                div.style.marginBottom = '1.5rem';
+                div.innerHTML = `
+                    <div class="group-header" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                        <div class="group-color" style="width: 20px; height: 20px; border-radius: 50%; background: ${group.color}; flex-shrink: 0;"></div>
+                        <div class="group-name" style="font-family: var(--font-sans); font-weight: 600; font-size: 1.1rem; color: var(--ink);">${keyword}</div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">エピソード番号（カンマ区切り）</label>
+                        <input type="text" 
+                               class="text-input" 
+                               value="${group.items.join(', ')}" 
+                               placeholder="例: 1, 3, 5"
+                               style="min-height: 50px;"
+                               oninput="updateGroupItems(${index}, this.value)">
+                        <p style="font-size: 0.85rem; color: var(--ink-light); font-style: italic; margin-top: 0.5rem;">
+                            💡 左のエピソード一覧の番号を参考にしてください
+                        </p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
             saveState();
         }
 
         function updateGroupItems(index, value) {
             const items = value.split(',').map(i => i.trim()).filter(i => i);
-            state.groups[index].items = items;
-            saveState();
-        }
-
-        function addGroup() {
-            if (state.groups.length < 5) {
-                state.groups.push({ name: '', items: [], color: '#8B7A99' });
-                renderDay2();
+            if (state.groups[index]) {
+                state.groups[index].items = items;
                 saveState();
             }
         }
 
-        // Day 3: Questions
-        function renderDay3() {
-            // Load whys
-            document.getElementById('mainTheme').value = state.mainTheme;
-            ['why1', 'why2', 'why3', 'why4', 'why5'].forEach((id, index) => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.value = state.whys[index];
-                    if (!el.dataset.listenerAdded) {
-                        el.addEventListener('input', (e) => {
-                            state.whys[index] = e.target.value;
-                            saveState();
-                        });
-                        el.dataset.listenerAdded = 'true';
-                    }
-                }
-            });
-
-            // Main theme listener
-            const mainThemeEl = document.getElementById('mainTheme');
-            if (mainThemeEl && !mainThemeEl.dataset.listenerAdded) {
-                mainThemeEl.addEventListener('input', (e) => {
-                    state.mainTheme = e.target.value;
-                    saveState();
-                });
-                mainThemeEl.dataset.listenerAdded = 'true';
+        function toggleReferenceStep3() {
+            const content = document.getElementById('step3Reference');
+            const icon = document.getElementById('referenceToggleIconStep3');
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                icon.classList.remove('collapsed');
+            } else {
+                content.classList.add('collapsed');
+                icon.classList.add('collapsed');
             }
+        }
 
-            // Render questions list
-            renderQuestionsList();
-
-            // Load final section
-            document.getElementById('finalQuestion').value = state.finalQuestion;
-            document.getElementById('questionFeeling').value = state.questionFeeling;
-            document.getElementById('whyThisQuestion').value = state.whyThisQuestion;
-            document.getElementById('confidence').value = state.confidence;
-            document.getElementById('confidenceValue').textContent = state.confidence;
+        // STEP 4: Theme Discovery
+        function renderStep4() {
+            // Populate STEP 3 groups reference
+            populateStep3GroupsReference();
+            
+            // Load text inputs
+            document.getElementById('theme').value = state.theme;
+            document.getElementById('values').value = state.values;
+            document.getElementById('unacceptable').value = state.unacceptable;
+            document.getElementById('idealWorld').value = state.idealWorld;
 
             // Add listeners
-            ['finalQuestion', 'questionFeeling', 'whyThisQuestion'].forEach(id => {
+            ['theme', 'values', 'unacceptable', 'idealWorld'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el && !el.dataset.listenerAdded) {
                     el.addEventListener('input', (e) => {
@@ -1455,19 +1857,143 @@
                     el.dataset.listenerAdded = 'true';
                 }
             });
+        }
 
-            const confidenceEl = document.getElementById('confidence');
-            if (confidenceEl && !confidenceEl.dataset.listenerAdded) {
-                confidenceEl.addEventListener('input', (e) => {
-                    state.confidence = parseInt(e.target.value);
-                    saveState();
-                });
-                confidenceEl.dataset.listenerAdded = 'true';
+        function populateStep3GroupsReference() {
+            const container = document.getElementById('step4ReferenceList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (state.groups.length === 0 || state.keywords.length === 0) {
+                container.innerHTML = '<div style="padding: 1rem; text-align: center; color: var(--ink-light); font-style: italic;">STEP 3のグループがまだありません</div>';
+                return;
+            }
+            
+            // 全エピソードを取得（違和感→喜び→怒りの順）
+            const allEpisodes = [
+                ...state.iwakan.filter(i => i && i.trim()),
+                ...state.yorokobi.filter(i => i && i.trim()),
+                ...state.ikari.filter(i => i && i.trim())
+            ];
+            
+            const colors = ['#D97642', '#7A9B76', '#C9A961', '#8B7A99', '#6B8E9B'];
+            
+            state.groups.forEach((group, index) => {
+                const div = document.createElement('div');
+                div.className = 'reference-item';
+                div.style.marginBottom = '1.5rem';
+                div.style.background = 'rgba(217, 118, 66, 0.03)';
+                div.style.padding = '1rem';
+                div.style.borderRadius = '8px';
+                
+                // グループ名とカラーインジケーター
+                let html = `
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid ${colors[index % colors.length]};">
+                        <div style="width: 16px; height: 16px; border-radius: 50%; background: ${colors[index % colors.length]}; flex-shrink: 0;"></div>
+                        <strong style="font-family: var(--font-sans); font-size: 1.05rem;">${group.name}</strong>
+                    </div>
+                `;
+                
+                // エピソード番号がある場合、内容を表示
+                if (group.items && group.items.length > 0) {
+                    html += '<div style="display: flex; flex-direction: column; gap: 0.5rem;">';
+                    
+                    group.items.forEach(itemNum => {
+                        const num = parseInt(itemNum);
+                        if (!isNaN(num) && num > 0 && num <= allEpisodes.length) {
+                            const episodeText = allEpisodes[num - 1];
+                            html += `
+                                <div style="display: flex; gap: 0.5rem; padding: 0.5rem; background: white; border-radius: 4px;">
+                                    <span style="font-weight: 600; color: ${colors[index % colors.length]}; min-width: 24px;">${num}.</span>
+                                    <span style="color: var(--ink-light); font-size: 0.9rem; line-height: 1.5;">${episodeText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>
+                                </div>
+                            `;
+                        }
+                    });
+                    
+                    html += '</div>';
+                } else {
+                    html += '<div style="color: var(--ink-light); font-style: italic; font-size: 0.9rem;">エピソードが選択されていません</div>';
+                }
+                
+                div.innerHTML = html;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleReferenceStep4() {
+            const content = document.getElementById('step4Reference');
+            const icon = document.getElementById('referenceToggleIconStep4');
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                icon.classList.remove('collapsed');
+            } else {
+                content.classList.add('collapsed');
+                icon.classList.add('collapsed');
+            }
+        }
+
+        // STEP 5: Question Creation
+        function renderStep5() {
+            // Populate STEP 4 themes reference
+            populateStep4ThemesReference();
+
+            // Render questions list
+            renderQuestionsList();
+        }
+
+        function populateStep4ThemesReference() {
+            const container = document.getElementById('step5ReferenceList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const themes = [
+                { label: '繰り返し出てくるテーマ', value: state.theme },
+                { label: 'あなたが大切にしている価値観', value: state.values },
+                { label: 'あなたが「許せない」もの', value: state.unacceptable },
+                { label: 'あなたが「こうあってほしい」世界', value: state.idealWorld }
+            ];
+            
+            const hasContent = themes.some(t => t.value && t.value.trim());
+            
+            if (!hasContent) {
+                container.innerHTML = '<div style="padding: 1rem; text-align: center; color: var(--ink-light); font-style: italic;">STEP 4の内容がまだありません</div>';
+                return;
+            }
+            
+            themes.forEach(theme => {
+                if (theme.value && theme.value.trim()) {
+                    const div = document.createElement('div');
+                    div.className = 'reference-item';
+                    div.innerHTML = `
+                        <strong style="font-family: var(--font-sans); display: block; margin-bottom: 0.5rem;">${theme.label}</strong>
+                        <div style="color: var(--ink-light);">${theme.value.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                    `;
+                    container.appendChild(div);
+                }
+            });
+        }
+
+        function toggleReferenceStep5() {
+            const content = document.getElementById('step5Reference');
+            const icon = document.getElementById('referenceToggleIconStep5');
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                icon.classList.remove('collapsed');
+            } else {
+                content.classList.add('collapsed');
+                icon.classList.add('collapsed');
             }
         }
 
         function renderQuestionsList() {
             const container = document.getElementById('questionsList');
+            if (!container) return;
+            
             container.innerHTML = '';
             state.questions.forEach((question, index) => {
                 const div = document.createElement('div');
@@ -1493,8 +2019,104 @@
         function addQuestion() {
             if (state.questions.length < 5) {
                 state.questions.push('');
-                renderDay3();
+                renderQuestionsList();
                 saveState();
+            }
+        }
+
+        // STEP 6: Question Creation
+        function renderStep6() {
+            // Populate STEP 5 whys and questions reference
+            populateStep5WhysAndQuestionsReference();
+
+            // Load final section
+            document.getElementById('finalQuestion').value = state.finalQuestion;
+            document.getElementById('whyThisQuestion').value = state.whyThisQuestion;
+
+            // Add listeners
+            ['finalQuestion', 'whyThisQuestion'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.dataset.listenerAdded) {
+                    el.addEventListener('input', (e) => {
+                        state[id] = e.target.value;
+                        saveState();
+                    });
+                    el.dataset.listenerAdded = 'true';
+                }
+            });
+        }
+
+        function populateStep5WhysAndQuestionsReference() {
+            const container = document.getElementById('step6ReferenceList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            // STEP 4 themes (各項目を個別のブロックに)
+            const themes = [
+                { label: '繰り返し出てくるテーマ', value: state.theme },
+                { label: 'あなたが大切にしている価値観', value: state.values },
+                { label: 'あなたが「許せない」もの', value: state.unacceptable },
+                { label: 'あなたが「こうあってほしい」世界', value: state.idealWorld }
+            ];
+            
+            const hasThemes = themes.some(t => t.value && t.value.trim());
+            
+            if (hasThemes) {
+                const div = document.createElement('div');
+                div.className = 'reference-item';
+                div.style.marginBottom = '1.5rem';
+                
+                let html = '<strong style="font-family: var(--font-sans); display: block; margin-bottom: 1rem; font-size: 1.05rem;">STEP 4で見つけたこと</strong>';
+                html += '<div style="display: flex; flex-direction: column; gap: 0.75rem;">';
+                
+                themes.forEach(theme => {
+                    if (theme.value && theme.value.trim()) {
+                        html += `
+                            <div style="padding: 1rem; background: rgba(122, 155, 118, 0.08); border-radius: 6px; border-left: 3px solid var(--accent-sage);">
+                                <div style="font-weight: 600; font-size: 0.9rem; color: var(--ink); margin-bottom: 0.5rem;">${theme.label}</div>
+                                <div style="color: var(--ink-light); font-size: 0.9rem; line-height: 1.6;">${theme.value.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                            </div>
+                        `;
+                    }
+                });
+                
+                html += '</div>';
+                div.innerHTML = html;
+                container.appendChild(div);
+            }
+            
+            // Questions (既存のスタイルを維持)
+            const questionsWithContent = state.questions.filter(q => q && q.trim());
+            if (questionsWithContent.length > 0) {
+                const div = document.createElement('div');
+                div.className = 'reference-item';
+                div.innerHTML = `
+                    <strong style="font-family: var(--font-sans); display: block; margin-bottom: 0.75rem;">STEP 5で作った問いの原型</strong>
+                    ${questionsWithContent.map((q, i) => `
+                        <div style="margin-bottom: 0.5rem; padding: 0.75rem; background: rgba(217, 118, 66, 0.05); border-radius: 8px; color: var(--ink);">
+                            <span style="font-weight: 600; font-family: var(--font-sans);">問い${i + 1}:</span> ${q.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+                        </div>
+                    `).join('')}
+                `;
+                container.appendChild(div);
+            }
+            
+            if (container.innerHTML === '') {
+                container.innerHTML = '<div style="padding: 1rem; text-align: center; color: var(--ink-light); font-style: italic;">STEP 4・5の内容がまだありません</div>';
+            }
+        }
+
+        function toggleReferenceStep6() {
+            const content = document.getElementById('step6Reference');
+            const icon = document.getElementById('referenceToggleIconStep6');
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                icon.classList.remove('collapsed');
+            } else {
+                content.classList.add('collapsed');
+                icon.classList.add('collapsed');
             }
         }
 
@@ -1504,7 +2126,6 @@
             const isComplete = state.finalQuestion.trim().length > 0;
 
             document.getElementById('displayQuestion').textContent = question;
-            document.getElementById('displayConfidence').textContent = state.confidence;
             
             // Add a visual indicator if incomplete
             const questionElement = document.getElementById('displayQuestion');
@@ -1517,10 +2138,10 @@
             } else {
                 questionElement.style.fontStyle = 'normal';
                 questionElement.style.color = 'var(--ink)';
-                messageElement.innerHTML = '3日間の旅を通じて、あなたは「自分の問い」を発見しました。<br>この問いが、あなたの事業の原点になります。';
+                messageElement.innerHTML = '6つのステップを通じて、あなたは「自分の問い」を発見しました。<br>この問いが、あなたの事業の原点になります。';
             }
             
-            goToDay(4);
+            goToStep(7);
         }
 
         function downloadResults() {
@@ -1846,11 +2467,10 @@
                 ? state.finalQuestion 
                 : 'あなたの問いは、ここから始まります'
         }</div>
-        <div class="confidence">確信度：${state.confidence || 5} / 10</div>
     </div>
     
     <div class="day-section">
-        <h2>Day 1：人生の痕跡</h2>
+        <h2>STEP 1：人生の痕跡</h2>
         
         <div class="subsection">
             <h3>違和感</h3>
@@ -1887,10 +2507,10 @@
     </div>
     
     <div class="day-section">
-        <h2>Day 2：パターン</h2>
+        <h2>STEP 2：キーワード抽出</h2>
         
         <div class="subsection">
-            <h3>キーワード</h3>
+            <h3>抽出されたキーワード</h3>
             ${state.keywords && state.keywords.length > 0 ? `
                 <div class="keywords">
                     ${state.keywords.map(k => 
@@ -1899,14 +2519,18 @@
                 </div>
             ` : '<div class="empty-message">（未入力）</div>'}
         </div>
+    </div>
+    
+    <div class="day-section">
+        <h2>STEP 3：グルーピング</h2>
         
         <div class="subsection">
-            <h3>グループ</h3>
+            <h3>キーワードベースのグループ</h3>
             ${state.groups && state.groups.some(g => g.name || (g.items && g.items.length > 0)) ? 
                 state.groups.map(g => `
                     <div class="group">
                         <div class="group-name">${escapeHtml(g.name) || '（未命名）'}</div>
-                        <div class="group-items">項目：${
+                        <div class="group-items">エピソード番号：${
                             g.items && g.items.length > 0 
                                 ? escapeHtml(g.items.join(', ')) 
                                 : 'なし'
@@ -1915,6 +2539,10 @@
                 `).join('') 
             : '<div class="empty-message">（未入力）</div>'}
         </div>
+    </div>
+    
+    <div class="day-section">
+        <h2>STEP 4：テーマ発見</h2>
         
         <div class="subsection">
             <h3>深層パターン</h3>
@@ -1948,30 +2576,10 @@
     </div>
     
     <div class="day-section">
-        <h2>Day 3：問いの創造</h2>
+        <h2>STEP 5：問いの原型</h2>
         
         <div class="subsection">
-            <h3>なぜの掘り下げ</h3>
-            ${state.mainTheme || (state.whys && state.whys.some(w => w && w.trim())) ? `
-                ${state.mainTheme ? `
-                    <div class="pattern-item">
-                        <div class="pattern-label">最も重要なテーマ</div>
-                        <div class="pattern-value">${escapeHtml(state.mainTheme)}</div>
-                    </div>
-                ` : ''}
-                ${state.whys ? state.whys.map((w, idx) => 
-                    w && w.trim() ? `
-                        <div class="pattern-item">
-                            <div class="pattern-label">なぜ${idx + 1}</div>
-                            <div class="pattern-value">${escapeHtml(w)}</div>
-                        </div>
-                    ` : ''
-                ).join('') : ''}
-            ` : '<div class="empty-message">（未入力）</div>'}
-        </div>
-        
-        <div class="subsection">
-            <h3>候補の問い</h3>
+            <h3>作成した問いの原型</h3>
             ${state.questions && state.questions.filter(q => q && q.trim()).length > 0 ? `
                 <div class="item-list">
                     ${state.questions.filter(q => q && q.trim()).map(q => 
@@ -1980,29 +2588,29 @@
                 </div>
             ` : '<div class="empty-message">（未入力）</div>'}
         </div>
+    </div>
+    
+    <div class="day-section">
+        <h2>STEP 6：問いの創造</h2>
         
         <div class="subsection">
             <h3>選んだ問いについて</h3>
-            ${state.questionFeeling || state.whyThisQuestion ? `
-                ${state.questionFeeling && state.questionFeeling.trim() ? `
-                    <div class="pattern-item">
-                        <div class="pattern-label">この問いを考えるときの感覚</div>
-                        <div class="pattern-value">${escapeHtml(state.questionFeeling)}</div>
-                    </div>
-                ` : ''}
-                ${state.whyThisQuestion && state.whyThisQuestion.trim() ? `
-                    <div class="pattern-item">
-                        <div class="pattern-label">なぜこの問いを選んだか</div>
-                        <div class="pattern-value">${escapeHtml(state.whyThisQuestion)}</div>
-                    </div>
-                ` : ''}
+            ${state.whyThisQuestion && state.whyThisQuestion.trim() ? `
+                <div class="pattern-item">
+                    <div class="pattern-label">なぜこの問いを選んだか</div>
+                    <div class="pattern-value">${escapeHtml(state.whyThisQuestion)}</div>
+                </div>
             ` : '<div class="empty-message">（未入力）</div>'}
         </div>
     </div>
     
     <div class="footer">
-        <p>この体験版では、Phase 1（自分の源泉を探る）を完了しました。</p>
-        <p style="margin-top: 0.5rem;">本編では、この問いを外の世界へ投影し（Phase 2-3）、<br>「なぜ私がやるのか」を徹底的に問い直し（Phase 4）、独自の解決策を創造します（Phase 5）。</p>
+        <p style="font-weight: 600; margin-bottom: 1rem;">NEXT STEP</p>
+        <p>この体験版では、本編のPhase 1【自分の源泉を探る】を体験してもらいました。</p>
+        <p style="margin-top: 0.75rem;">本編のワークブックでは、次にこの"問い"を共有できる他者の存在を想像します。<br>
+        さらにその"共通の問い"をもとに、仮説【解決すべき課題】を、想定します。<br>
+        【解決すべき課題】が決まったら本格的に他者へのヒアリングを行っていきます。</p>
+        <p style="margin-top: 0.75rem;">このように"自分の意見"と"現実の他者"を行き来しながら、1か月間で【あなただけの事業アイデア】を生み出すことが、このワークブックの目的です。</p>
     </div>
 </body>
 </html>`;
@@ -2020,35 +2628,25 @@
             localStorage.clear();
             
             // Clear ALL input fields on the page
-            document.querySelectorAll('input[type="text"], textarea, input[type="range"]').forEach(field => {
-                if (field.type === 'range') {
-                    field.value = 5;
-                    const valueDisplay = document.getElementById('confidenceValue');
-                    if (valueDisplay) valueDisplay.textContent = '5';
-                } else {
-                    field.value = '';
-                }
+            document.querySelectorAll('input[type="text"], textarea').forEach(field => {
+                field.value = '';
             });
             
             // Reset state completely
             state = {
-                currentDay: 0,
+                currentStep: 0,
                 iwakan: [''],
                 yorokobi: [''],
                 ikari: [''],
                 keywords: [],
-                groups: [{ name: '', items: [], color: '#D97642' }],
+                groups: [],
                 theme: '',
                 values: '',
                 unacceptable: '',
                 idealWorld: '',
-                mainTheme: '',
-                whys: ['', '', '', '', ''],
                 questions: [''],
                 finalQuestion: '',
-                questionFeeling: '',
-                whyThisQuestion: '',
-                confidence: 5
+                whyThisQuestion: ''
             };
             
             // Hide app, show landing
@@ -2060,6 +2658,20 @@
             
             // Scroll to top
             window.scrollTo(0, 0);
+        }
+
+        function confirmReset() {
+            // Show custom modal instead of native confirm
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+
+        function confirmResetAction() {
+            closeModal();
+            resetWorkbook();
         }
 
         // Initialize on load
